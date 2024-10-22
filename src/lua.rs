@@ -9,8 +9,8 @@ pub use crate::types::{Case, Locale, Result, StyleGuide};
 #[mlua::lua_module]
 fn decasify(lua: &Lua) -> LuaResult<LuaTable> {
     let exports = lua.create_table().unwrap();
-    let case = lua.create_function(case)?;
-    exports.set("case", case).unwrap();
+    let lcase = lua.create_function(case)?;
+    exports.set("case", lcase).unwrap();
     let titlecase = lua.create_function(titlecase)?;
     exports.set("titlecase", titlecase).unwrap();
     let lowercase = lua.create_function(lowercase)?;
@@ -21,6 +21,22 @@ fn decasify(lua: &Lua) -> LuaResult<LuaTable> {
     exports.set("sentencecase", sentencecase).unwrap();
     let version = option_env!("VERGEN_GIT_DESCRIBE").unwrap_or_else(|| env!("CARGO_PKG_VERSION"));
     let version = lua.create_string(version)?;
+    let mt = lua.create_table().unwrap();
+    let lua_case: LuaFunction = exports.get("case").unwrap();
+    let case = lua
+        .create_function(
+            move |_,
+                  (_, input, xcase, locale, style): (
+                LuaTable,
+                LuaString,
+                LuaValue,
+                LuaValue,
+                LuaValue,
+            )| { Ok(case((input, xcase, locale, style))) },
+        )
+        .unwrap();
+    mt.set("__call", case).unwrap();
+    exports.set_metatable(Some(mt));
     exports.set("version", version).unwrap();
     Ok(exports)
 }

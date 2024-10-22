@@ -3,6 +3,8 @@
 
 #![doc = include_str!("../README.md")]
 
+use snafu::prelude::*;
+
 use regex::Regex;
 use titlecase::titlecase as gruber_titlecase;
 use unicode_titlecase::tr_az::StrTrAzCasing;
@@ -25,6 +27,25 @@ pub mod python;
 
 #[cfg(feature = "wasm")]
 pub mod wasm;
+
+#[derive(Snafu)]
+pub enum Error {
+    #[snafu(display("std::io::Error {}", source))]
+    XXError {
+        source: std::io::Error,
+    },
+    UnresolvedError {},
+}
+
+// Clap CLI errors are reported using the Debug trait, but Snafu sets up the Display tait.
+// So we deligate. c.f. https://github.com/shepmaster/snafu/issues/110
+impl std::fmt::Debug for Error {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
+        std::fmt::Display::fmt(self, fmt)
+    }
+}
+
+pub type Result<T, E = Error> = std::result::Result<T, E>;
 
 /// Convert a string to a specific case following typesetting conventions for a target locale
 pub fn to_case(

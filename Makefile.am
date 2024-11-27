@@ -66,6 +66,12 @@ REL_ROCK_SILE := $(PACKAGE_NAME).sile-$(SEMVER)-$(ROCKREV).src.rock
 EXTRA_DIST += decasify.rockspec.in decasify.nvim.rockspec.in decasify.sile.rockspec.in
 EXTRA_DIST += $(REL_SPEC) $(REL_SPEC_NVIM) $(REL_SPEC_SILE)
 
+typst: typst/decasify.wasm
+
+typst/decasify.wasm:
+	cargo build --target wasm32-unknown-unknown --release -p typst
+	wasm-opt -Oz target/wasm32-unknown-unknown/release/@TRANSFORMED_PACKAGE_NAME@.wasm -o typst/@TRANSFORMED_PACKAGE_NAME.wasm
+
 check: busted pytest
 
 PHONY_DEVELOPER_TARGETS = rockspecs srcrocks rocks install-luarock busted pytest release-preview

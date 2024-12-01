@@ -69,8 +69,8 @@ EXTRA_DIST += $(REL_SPEC) $(REL_SPEC_NVIM) $(REL_SPEC_SILE)
 typst: typst/decasify.wasm
 
 typst/decasify.wasm:
-	cargo build --target wasm32-unknown-unknown --release -p typst
-	wasm-opt -Oz target/wasm32-unknown-unknown/release/@TRANSFORMED_PACKAGE_NAME@.wasm -o typst/@TRANSFORMED_PACKAGE_NAME.wasm
+	$(CARGO_ENV) $(CARGO) build --target wasm32-unknown-unknown --release -p typst
+	$(WASMOPT) -Oz $(CARGO_TARGET_DIR)/typst/@TRANSFORMED_PACKAGE_NAME@.wasm -o typst/@TRANSFORMED_PACKAGE_NAME.wasm
 
 check: busted pytest
 

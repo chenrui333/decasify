@@ -5,8 +5,8 @@
   str(_plugin.titlecase(bytes(s), bytes(l)))
 }
 
-#let titlecase(body, locale, limit: 4) = {
-  show regex(".{" + str(limit) + ",}"): it => string-to-titlecase(it.text, locale)
+#let titlecase(body, limit: 4) = {
+  show regex(".{" + str(limit) + ",}"): it => string-to-titlecase(it.text, text.lang)
 
   body
 }

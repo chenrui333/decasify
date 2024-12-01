@@ -6,6 +6,8 @@
   "first impluse",
   "ilk ışıltı",
 ) [
-  #s → #titlecase(s, "en") \
-  #s → #titlecase(s, "tr") \
+  #set text(lang: "en")
+  (#context(text.lang)) #s → #titlecase(s) \
+  #set text(lang: "tr")
+  (#context(text.lang)) #s → #titlecase(s) \
 ]

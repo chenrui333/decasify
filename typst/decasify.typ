@@ -1,7 +1,8 @@
 #let _plugin = plugin("decasify.wasm")
 
 #let string-to-titlecase(s) = {
-  str(_plugin.titlecase(bytes(s), "en", "default"))
+  // str(_plugin.titlecase(bytes(s), bytes("en"), bytes("default")))
+  str(_plugin.titlecase(bytes(s)))
 }
 
 #let titlecase(body, limit: 4) = {

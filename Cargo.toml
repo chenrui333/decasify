@@ -3,6 +3,7 @@ name = "decasify"
 version = "0.8.0"
 description = "A CLI utility and library to cast strings to title-case according to locale specific style guides including Turkish support"
 readme = "README.md"
+build = "build-aux/build.rs"
 include = ["*.rs"]
 edition.workspace = true
 rust-version.workspace = true
@@ -17,7 +18,6 @@ authors = ["Caleb Maclennan <caleb@alerque.com>"]
 homepage = "https://github.com/alerque/decasify"
 repository = "https://github.com/alerque/decasify"
 license = "LGPL-3.0-only"
-build = "build-aux/build.rs"
 edition = "2021"
 rust-version = "1.73.0"
 
@@ -56,6 +56,11 @@ wasm = ["dep:wasm-bindgen"]
 
 [profile.release]
 lto = true
+
+[profile.typst]
+inherits = "release"
+opt-level = "z"
+strip = true
 
 [workspace.dependencies.decasify]
 path = "."

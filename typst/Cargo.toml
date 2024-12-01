@@ -17,8 +17,3 @@ wasm-minimal-protocol = "0.1"
 
 [dependencies.decasify]
 workspace = true
-
-[profile.release]
-opt-level = "z"
-strip = true
-lto = true

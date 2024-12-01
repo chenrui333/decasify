@@ -68,11 +68,15 @@ EXTRA_DIST += $(REL_SPEC) $(REL_SPEC_NVIM) $(REL_SPEC_SILE)
 
 typst: typst/decasify.wasm
 
+_RUST_OUT_TYPST = @builddir@/target/@RUST_TARGET_SUBDIR@/.cargo_out_dir
+
 typst/decasify.wasm: CARGO_TARGET_TRIPLE = wasm32-unknown-unknown
 typst/decasify.wasm: CARGO_FEATURE_ARGS =
 typst/decasify.wasm:
 	$(CARGO_ENV) $(CARGO) build $(CARGO_VERBOSE) $(CARGO_FEATURE_ARGS) $(CARGO_RELEASE_ARGS) --target $(CARGO_TARGET_TRIPLE) -p typst
-	$(WASMOPT) -Oz $$(cat $(_RUST_OUT))/typst/@TRANSFORMED_PACKAGE_NAME@.wasm -o typst/@TRANSFORMED_PACKAGE_NAME.wasm
+	$(CARGO_ENV) $(CARGO) build  --target $(CARGO_TARGET_TRIPLE) --quiet --message-format=json $(CARGO_FEATURE_ARGS) $(CARGO_RELEASE_ARGS) | \
+		$(JQ) -sr 'map(select(.reason == "build-script-executed")) | last | .out_dir' > $(_RUST_OUT_TYPST)
+	$(WASMOPT) -Oz $$(cat $(_RUST_OUT_TYPST))/typst/@TRANSFORMED_PACKAGE_NAME@.wasm -o typst/@TRANSFORMED_PACKAGE_NAME.wasm
 
 check: busted pytest
 

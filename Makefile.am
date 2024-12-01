@@ -70,8 +70,9 @@ typst-universe: typst/decasify.wasm
 
 typst/decasify.wasm: CARGO_TARGET_TRIPLE = wasm32-unknown-unknown
 typst/decasify.wasm: CARGO_WASM_DIR = @builddir@/target/$(CARGO_TARGET_TRIPLE)
-typst/decasify.wasm: CARGO_FEATURE_ARGS = --release --locked
-typst/decasify.wasm:
+typst/decasify.wasm: CARGO_FEATURE_ARGS =
+typst/decasify.wasm: CARGO_RELEASE_ARGS = --release --locked
+typst/decasify.wasm: typst/src/lib.rs
 	$(CARGO_ENV) $(CARGO) build $(CARGO_VERBOSE) $(CARGO_FEATURE_ARGS) $(CARGO_RELEASE_ARGS) --target $(CARGO_TARGET_TRIPLE) -p typst
 	$(WASMOPT) -Oz $(CARGO_WASM_DIR)/release/typst.wasm -o typst/$(TRANSFORMED_PACKAGE_NAME).wasm
 

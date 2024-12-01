@@ -3,7 +3,9 @@
 #set page(width: auto, height: auto, margin: 1cm)
 
 #for s in (
-  "foo bar: baz",
+  "first impluse",
+  "ilk ışıltı",
 ) [
-  #s => #titlecase(s) \
+  #s → #titlecase(s, "en") \
+  #s → #titlecase(s, "tr") \
 ]

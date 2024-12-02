@@ -1,11 +1,11 @@
 #let _plugin = plugin("decasify.wasm")
 
-#let string-to-titlecase(text, lang) = {
-  str(_plugin.titlecase(bytes(text), bytes(lang)))
+#let string-to-titlecase(text, lang, style) = {
+  str(_plugin.titlecase(bytes(text), bytes(lang), bytes(style)))
 }
 
-#let titlecase(body) = {
-  show regex(".+"): it => string-to-titlecase(it.text, text.lang)
+#let titlecase(body, style: "default") = {
+  show regex(".+"): it => string-to-titlecase(it.text, text.lang, style)
   body
 }
 

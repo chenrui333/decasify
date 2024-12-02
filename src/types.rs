@@ -181,6 +181,13 @@ impl From<&String> for StyleGuide {
     }
 }
 
+impl From<&[u8]> for StyleGuide {
+    fn from(s: &[u8]) -> Self {
+        let s = String::from_utf8(s.to_vec()).unwrap();
+        Self::from_str(s.as_ref()).unwrap()
+    }
+}
+
 impl From<Option<StyleGuide>> for StyleGuide {
     fn from(style: Option<StyleGuide>) -> Self {
         match style {

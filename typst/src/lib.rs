@@ -5,29 +5,30 @@ use wasm_minimal_protocol::{initiate_protocol, wasm_func};
 initiate_protocol!();
 
 #[wasm_func]
-pub fn titlecase(data: &[u8], locale: &[u8]) -> Result<Vec<u8>> {
-    let s = String::from_utf8(data.to_vec())?;
-    let l = Locale::from(locale);
-    Ok(decasify::titlecase(&s, l, StyleGuide::default()).into_bytes())
+pub fn titlecase(data: &[u8], lang: &[u8], style: &[u8]) -> Result<Vec<u8>> {
+    let chunk = String::from_utf8(data.to_vec())?;
+    let locale = Locale::from(lang);
+    let style = StyleGuide::from(style);
+    Ok(decasify::titlecase(&chunk, locale, style).into_bytes())
 }
 
 #[wasm_func]
-pub fn lowercase(data: &[u8], locale: &[u8]) -> Result<Vec<u8>> {
-    let s = String::from_utf8(data.to_vec())?;
-    let l = Locale::from(locale);
-    Ok(decasify::lowercase(&s, l).into_bytes())
+pub fn lowercase(data: &[u8], lang: &[u8]) -> Result<Vec<u8>> {
+    let chunk = String::from_utf8(data.to_vec())?;
+    let locale = Locale::from(lang);
+    Ok(decasify::lowercase(&chunk, locale).into_bytes())
 }
 
 #[wasm_func]
-pub fn uppercase(data: &[u8], locale: &[u8]) -> Result<Vec<u8>> {
-    let s = String::from_utf8(data.to_vec())?;
-    let l = Locale::from(locale);
-    Ok(decasify::uppercase(&s, l).into_bytes())
+pub fn uppercase(data: &[u8], lang: &[u8]) -> Result<Vec<u8>> {
+    let chunk = String::from_utf8(data.to_vec())?;
+    let locale = Locale::from(lang);
+    Ok(decasify::uppercase(&chunk, locale).into_bytes())
 }
 
 #[wasm_func]
-pub fn sentencecase(data: &[u8], locale: &[u8]) -> Result<Vec<u8>> {
-    let s = String::from_utf8(data.to_vec())?;
-    let l = Locale::from(locale);
-    Ok(decasify::sentencecase(&s, l).into_bytes())
+pub fn sentencecase(data: &[u8], lang: &[u8]) -> Result<Vec<u8>> {
+    let chunk = String::from_utf8(data.to_vec())?;
+    let locale = Locale::from(lang);
+    Ok(decasify::sentencecase(&chunk, locale).into_bytes())
 }

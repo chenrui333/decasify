@@ -147,6 +147,13 @@ impl From<&String> for Case {
     }
 }
 
+impl From<&[u8]> for Case {
+    fn from(s: &[u8]) -> Self {
+        let s = String::from_utf8(s.to_vec()).unwrap();
+        Self::from_str(s.as_ref()).unwrap()
+    }
+}
+
 impl FromStr for StyleGuide {
     type Err = Error;
     fn from_str(s: &str) -> Result<Self> {

@@ -3,11 +3,9 @@
 #set page(width: auto, height: auto, margin: 1cm)
 
 #for s in (
-  "first impluse",
-  "ilk ışıltı",
+  (str: "first impulse", lang: "en"),
+  (str: "ilk ışıltı", lang: "tr"),
 ) [
-  #set text(lang: "en")
-  (#context(text.lang)) #s → #titlecase(s) \
-  #set text(lang: "tr")
-  (#context(text.lang)) #s → #titlecase(s) \
+  #set text(lang: s.lang)
+  [#context(text.lang)] #s.str → #titlecase(s.str) \
 ]

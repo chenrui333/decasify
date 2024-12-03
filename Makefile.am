@@ -81,6 +81,7 @@ typst/example.pdf: typst/example.typ typst/decasify.wasm
 
 typst/readme_%.svg: typst/readme_%.typ
 	$(TYPST) compile -f svg $< $@
+	$(SVGO) --multipass --precision 2 --pretty --indent 2 $@
 
 typst/readme_%.typ: typst/README.md
 	env 'OUTPUT_PATTERN=typst/readme_%s.typ' $(PANDOC) $< -o $@

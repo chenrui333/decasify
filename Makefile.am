@@ -83,7 +83,7 @@ typst/readme_%.svg: typst/readme_%.typ
 	$(TYPST) compile -f svg $< $@
 
 typst/readme_%.typ: typst/README.md
-	$(PANDOC) $< -o $@
+	env 'OUTPUT_PATTERN=typst/readme_%s.typ' $(PANDOC) $< -o $@
 
 check: busted pytest
 

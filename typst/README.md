@@ -17,7 +17,7 @@ Includes support for Turkish and multiple style guides.
 
 = all headings will be titlecase
 
-#sentencecase("a manually sentencecased phrase")
+#sentencecase("a manually sentence-cased phrase")
 
 Now switching to show Turkish titlecasing:
 

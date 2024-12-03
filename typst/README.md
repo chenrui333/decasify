@@ -5,7 +5,22 @@ Provides functionns for title-case (and other cases) that adapt to the language 
 Includes support for Turkish and multiple style guides.
 
 ```typst
-#import "decasify.typ": titlecase
+#import "@preview/decasify:0.8.0": *
+
+#set page(width: auto, height: auto, margin: 1cm)
+
+#set text(lang: "en")
+
+#show heading: it => [
+  #titlecase(it.body)
+]
+
+= all headings will be titlecase
+
+#sentencecase("a manually sentencecased phrase")
+
+Now switching to show Turkish titlecasing:
+
 #set text(lang: "tr")
 #titlecase("ilk ışıltı")
 ```

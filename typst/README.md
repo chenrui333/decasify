@@ -9,3 +9,5 @@ Includes support for Turkish and multiple style guides.
 #set text(lang: "tr")
 #titlecase("ilk ışıltı")
 ```
+
+![example](./example.png)

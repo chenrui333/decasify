@@ -19,7 +19,7 @@ Includes support for Turkish and multiple style guides.
 
 #sentencecase("a manually sentence-cased phrase")
 
-Now switching to show Turkish titlecasing:
+Now switch languages and show Turkish titlecasing:
 
 #set text(lang: "tr")
 

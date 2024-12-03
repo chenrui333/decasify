@@ -83,8 +83,13 @@ typst/readme_%.svg: typst/readme_%.typ
 	$(TYPST) compile -f svg $< $@
 	$(SVGO) --multipass --precision 2 --pretty --indent 2 $@
 
-typst/readme_%.typ: typst/README.md
-	env 'OUTPUT_PATTERN=typst/readme_%s.typ' $(PANDOC) $< -o $@
+CODEBLOCK_FILTER = build-aux/extract_codeblocks.lua
+EXTRA_DIST += $(CODEBLOCK_FILTER)
+
+typst/readme_%.typ: typst/README.md $(CODEBLOCK_FILTER)
+	env 'OUTPUT_PATTERN=typst/readme_%s.typ' \
+		$(PANDOC) --lua-filter $(CODEBLOCK_FILTER) -t plain $< -o /dev/null
+	$(SED) -i -e '1s/".*"/"decasify.typ"/' $@
 
 check: busted pytest
 

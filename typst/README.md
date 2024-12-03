@@ -22,6 +22,7 @@ Includes support for Turkish and multiple style guides.
 Now switching to show Turkish titlecasing:
 
 #set text(lang: "tr")
+
 #titlecase("ilk ışıltı")
 ```
 

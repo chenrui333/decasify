@@ -79,6 +79,12 @@ typst/decasify.wasm: typst/src/lib.rs
 typst/example.pdf: typst/example.typ typst/decasify.wasm
 	$(TYPST) compile $<
 
+typst/readme_%.svg: typst/readme_%.typ
+	$(TYPST) compile -f svg $< $@
+
+typst/readme_%.typ: typst/README.md
+	$(PANDOC) $< -o $@
+
 check: busted pytest
 
 PHONY_DEVELOPER_TARGETS = rockspecs srcrocks rocks install-luarock busted pytest release-preview
